@@ -174,6 +174,8 @@ public:
     void saveXmlHyperlinks(QXmlStreamWriter &writer) const;
     void saveXmlDrawings(QXmlStreamWriter &writer) const;
     void saveXmlDataValidations(QXmlStreamWriter &writer) const;
+    void saveXmlPageMargins(QXmlStreamWriter &writer) const; // kYra added
+    void saveXmlPageSetup(QXmlStreamWriter &writer) const; // kYra added
     int rowPixelsSize(int row) const;
     int colPixelsSize(int col) const;
 
@@ -184,6 +186,8 @@ public:
     void loadXmlSheetFormatProps(QXmlStreamReader &reader);
     void loadXmlSheetViews(QXmlStreamReader &reader);
     void loadXmlHyperlinks(QXmlStreamReader &reader);
+    void loadXmlPageMargins(QXmlStreamReader &reader); // kYra added
+    void loadXmlPageSetup(QXmlStreamReader &reader); // kYra added
 
     QList<QSharedPointer<XlsxRowInfo>> getRowInfoList(int rowFirst, int rowLast);
     QList<QSharedPointer<XlsxColumnInfo>> getColumnInfoList(int colFirst, int colLast);
@@ -229,6 +233,18 @@ public:
     bool showRuler;
     bool showOutlineSymbols;
     bool showWhiteSpace;
+
+    // kYra added
+    double headerHeight;
+    double footerHeight;
+    double leftMargin;
+    double topMargin;
+    double rightMargin;
+    double bottomMargin;
+    bool landscape;
+    int scale;
+    int fitToWidth;
+    int fitToHeight;
 
     QRegularExpression urlPattern;
 

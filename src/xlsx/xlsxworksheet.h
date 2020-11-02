@@ -153,6 +153,32 @@ public:
     bool isWhiteSpaceVisible() const;
     void setWhiteSpaceVisible(bool visible);
 
+    // kYra added
+    double headerHeight() const;
+    void setHeaderHeight(double height);
+    double footerHeight() const;
+    void setFooterHeight(double height);
+    double leftMargin() const;
+    void setLeftMargin(double margin);
+    double topMargin() const;
+    void setTopMargin(double margin);
+    double rightMargin() const;
+    void setRightMargin(double margin);
+    double bottomMargin() const;
+    void setBottomMargin(double margin);
+    void setMargins(double margin);
+    void setMargins(double leftMargin, double topMargin, double rightMargin, double bottomMargin);
+    bool isPortrait() const;
+    void setPortrait(bool portrait);
+    bool isLandscape() const;
+    void setLandscape(bool landscape);
+    int scale() const;
+    void setScale(double scale);
+    int fitToWidth() const;
+    void setFitToWidth(double width);
+    int fitToHeight() const;
+    void setFitToHeight(double height);
+
     ~Worksheet();
 
 private:

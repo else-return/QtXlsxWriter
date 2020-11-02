@@ -71,6 +71,16 @@ WorksheetPrivate::WorksheetPrivate(Worksheet *p, Worksheet::CreateFlag flag)
     , showRuler(false)
     , showOutlineSymbols(true)
     , showWhiteSpace(true)
+    , headerHeight(0.3) // kYra added
+    , footerHeight(0.3) // kYra added
+    , leftMargin(0.7) // kYra added
+    , topMargin(0.75) // kYra added
+    , rightMargin(0.7) // kYra added
+    , bottomMargin(0.75) // kYra added
+    , landscape(false) // kYra added
+    , scale(100) // kYra added
+    , fitToWidth(0) // kYra added
+    , fitToHeight(0) // kYra added
     , urlPattern(QStringLiteral("^([fh]tt?ps?://)|(mailto:)|(file://)"))
 {
     previous_row = 0;
@@ -425,6 +435,254 @@ void Worksheet::setWhiteSpaceVisible(bool visible)
 {
     Q_D(Worksheet);
     d->showWhiteSpace = visible;
+}
+
+// kYra added
+/*!
+ * Returns height of page header
+ */
+double Worksheet::headerHeight() const
+{
+    Q_D(const Worksheet);
+    return d->headerHeight;
+}
+
+// kYra added
+/*!
+ * Sets height of page header equal to \a height
+ */
+void Worksheet::setHeaderHeight(double height)
+{
+    Q_D(Worksheet);
+    d->headerHeight = height;
+}
+
+// kYra added
+/*!
+ * Returns height of page footer
+ */
+double Worksheet::footerHeight() const
+{
+    Q_D(const Worksheet);
+    return d->footerHeight;
+}
+
+// kYra added
+/*!
+ * Sets height of page footer equal to \a height
+ */
+void Worksheet::setFooterHeight(double height)
+{
+    Q_D(Worksheet);
+    d->footerHeight = height;
+}
+
+// kYra added
+/*!
+ * Returns size of page left margin
+ */
+double Worksheet::leftMargin() const
+{
+    Q_D(const Worksheet);
+    return d->leftMargin;
+}
+
+// kYra added
+/*!
+ * Sets size of page left margin equal to \a margin
+ */
+void Worksheet::setLeftMargin(double margin)
+{
+    Q_D(Worksheet);
+    d->leftMargin = margin;
+}
+
+// kYra added
+/*!
+ * Returns size of page top margin
+ */
+double Worksheet::topMargin() const
+{
+    Q_D(const Worksheet);
+    return d->topMargin;
+}
+
+// kYra added
+/*!
+ * Sets size of page top margin equal to \a margin
+ */
+void Worksheet::setTopMargin(double margin)
+{
+    Q_D(Worksheet);
+    d->topMargin = margin;
+}
+
+// kYra added
+/*!
+ * Returns size of page right margin
+ */
+double Worksheet::rightMargin() const
+{
+    Q_D(const Worksheet);
+    return d->rightMargin;
+}
+
+// kYra added
+/*!
+ * Sets size of page right margin equal to \a margin
+ */
+void Worksheet::setRightMargin(double margin)
+{
+    Q_D(Worksheet);
+    d->rightMargin = margin;
+}
+
+// kYra added
+/*!
+ * Returns size of page bottom margin
+ */
+double Worksheet::bottomMargin() const
+{
+    Q_D(const Worksheet);
+    return d->bottomMargin;
+}
+
+// kYra added
+/*!
+ * Sets size of page bottom margin equal to \a margin
+ */
+void Worksheet::setBottomMargin(double margin)
+{
+    Q_D(Worksheet);
+    d->bottomMargin = margin;
+}
+
+// kYra added
+/*!
+ * Sets size of all page margins equal to \a margin
+ */
+void Worksheet::setMargins(double margin)
+{
+    Q_D(Worksheet);
+    d->leftMargin = margin;
+    d->topMargin = margin;
+    d->rightMargin = margin;
+    d->bottomMargin = margin;
+}
+
+// kYra added
+/*!
+ * Sets size of page left, top, right and bottom margins equal to \a
+ * leftMargin, \a topMargin, \a rightMargin and \a bottomMargin
+ * respectively
+ */
+void Worksheet::setMargins(double leftMargin, double topMargin, double rightMargin, double bottomMargin)
+{
+    Q_D(Worksheet);
+    d->leftMargin = leftMargin;
+    d->topMargin = topMargin;
+    d->rightMargin = rightMargin;
+    d->bottomMargin = bottomMargin;
+}
+
+// kYra added
+/*!
+ * Returns whether page in portrait mode
+ */
+bool Worksheet::isPortrait() const
+{
+    Q_D(const Worksheet);
+    return !d->landscape;
+}
+
+// kYra added
+/*!
+ * Sets page to portrait or landscape mode based on \a portrait.
+ */
+void Worksheet::setPortrait(bool portrait)
+{
+    Q_D(Worksheet);
+    d->landscape = !portrait;
+}
+
+// kYra added
+/*!
+ * Returns whether page in landscape mode
+ */
+bool Worksheet::isLandscape() const
+{
+    Q_D(const Worksheet);
+    return d->landscape;
+}
+
+// kYra added
+/*!
+ * Sets page to landscape or portrait mode based on \a landscape.
+ */
+void Worksheet::setLandscape(bool landscape)
+{
+    Q_D(Worksheet);
+    d->landscape = landscape;
+}
+
+// kYra added
+/*!
+ * Returns page scale
+ */
+int Worksheet::scale() const
+{
+    Q_D(const Worksheet);
+    return d->scale;
+}
+
+// kYra added
+/*!
+ * Sets page scale equal to \a scale
+ */
+void Worksheet::setScale(double scale)
+{
+    Q_D(Worksheet);
+    d->scale = scale;
+}
+
+// kYra added
+/*!
+ * Returns content width limit in pages
+ */
+int Worksheet::fitToWidth() const
+{
+    Q_D(const Worksheet);
+    return d->fitToWidth;
+}
+
+// kYra added
+/*!
+ * Sets content width limit equal to \a width pages
+ */
+void Worksheet::setFitToWidth(double width)
+{
+    Q_D(Worksheet);
+    d->fitToWidth = width;
+}
+
+// kYra added
+/*!
+ * Returns content height limit in pages
+ */
+int Worksheet::fitToHeight() const
+{
+    Q_D(const Worksheet);
+    return d->fitToHeight;
+}
+
+// kYra added
+/*!
+ * Sets content height limit equal to \a height pages
+ */
+void Worksheet::setFitToHeight(double height)
+{
+    Q_D(Worksheet);
+    d->fitToHeight = height;
 }
 
 /*!
@@ -1188,6 +1446,13 @@ void Worksheet::saveToXmlFile(QIODevice *device) const
     //    "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac");
     //    writer.writeAttribute("mc:Ignorable", "x14ac");
 
+    if (d->fitToWidth > 0 || d->fitToHeight > 0) {
+        writer.writeStartElement(QStringLiteral("sheetPr"));
+        writer.writeEmptyElement(QStringLiteral("pageSetUpPr"));
+        writer.writeAttribute(QStringLiteral("fitToPage"), QString::number(1));
+        writer.writeEndElement();
+    }
+
     writer.writeStartElement(QStringLiteral("dimension"));
     writer.writeAttribute(QStringLiteral("ref"), d->generateDimensionString());
     writer.writeEndElement(); // dimension
@@ -1275,6 +1540,8 @@ void Worksheet::saveToXmlFile(QIODevice *device) const
     d->saveXmlDataValidations(writer);
     d->saveXmlHyperlinks(writer);
     d->saveXmlDrawings(writer);
+    d->saveXmlPageMargins(writer); // kYra added
+    d->saveXmlPageSetup(writer); // kYra added
 
     writer.writeEndElement(); // worksheet
     writer.writeEndDocument();
@@ -1497,6 +1764,34 @@ void WorksheetPrivate::saveXmlDrawings(QXmlStreamWriter &writer) const
     writer.writeEmptyElement(QStringLiteral("drawing"));
     writer.writeAttribute(QStringLiteral("r:id"),
                           QStringLiteral("rId%1").arg(relationships->count()));
+}
+
+// kYra added
+void WorksheetPrivate::saveXmlPageMargins(QXmlStreamWriter &writer) const
+{
+    writer.writeEmptyElement(QStringLiteral("pageMargins"));
+    writer.writeAttribute(QStringLiteral("header"), QString::number(headerHeight));
+    writer.writeAttribute(QStringLiteral("footer"), QString::number(footerHeight));
+    writer.writeAttribute(QStringLiteral("left"), QString::number(leftMargin));
+    writer.writeAttribute(QStringLiteral("top"), QString::number(topMargin));
+    writer.writeAttribute(QStringLiteral("right"), QString::number(rightMargin));
+    writer.writeAttribute(QStringLiteral("bottom"), QString::number(bottomMargin));
+}
+
+// kYra added
+void WorksheetPrivate::saveXmlPageSetup(QXmlStreamWriter &writer) const
+{
+    writer.writeEmptyElement(QStringLiteral("pageSetup"));
+    writer.writeAttribute(QStringLiteral("orientation"), landscape ? QLatin1String("landscape") : QLatin1String("portrait"));
+
+    if (scale > 0 && scale < 100) {
+        writer.writeAttribute(QStringLiteral("scale"), QString::number(scale));
+    }
+
+    if (fitToWidth > 0 || fitToHeight > 0) {
+        writer.writeAttribute(QStringLiteral("fitToWidth"), QString::number(fitToWidth > 0 ? fitToWidth : 0));
+        writer.writeAttribute(QStringLiteral("fitToHeight"), QString::number(fitToHeight > 0 ? fitToHeight : 0));
+    }
 }
 
 void WorksheetPrivate::splitColsInfo(int colFirst, int colLast)
@@ -2285,6 +2580,49 @@ void WorksheetPrivate::loadXmlHyperlinks(QXmlStreamReader &reader)
     }
 }
 
+// kYra added
+void WorksheetPrivate::loadXmlPageMargins(QXmlStreamReader &reader)
+{
+    Q_ASSERT(reader.name() == QLatin1String("pageMargins"));
+    QXmlStreamAttributes attributes = reader.attributes();
+
+    for (auto attribute : attributes) {
+        if (attribute.name() == QLatin1String("header")) {
+            headerHeight = attribute.value().toDouble();
+        } else if (attribute.name() == QLatin1String("footer")) {
+            footerHeight = attribute.value().toDouble();
+        } else if (attribute.name() == QLatin1String("left")) {
+            leftMargin = attribute.value().toDouble();
+        } else if (attribute.name() == QLatin1String("top")) {
+            topMargin = attribute.value().toDouble();
+        } else if (attribute.name() == QLatin1String("right")) {
+            rightMargin = attribute.value().toDouble();
+        } else if (attribute.name() == QLatin1String("bottom")) {
+            bottomMargin = attribute.value().toDouble();
+        }
+    }
+}
+
+// kYra added
+void WorksheetPrivate::loadXmlPageSetup(QXmlStreamReader &reader)
+{
+    Q_ASSERT(reader.name() == QLatin1String("pageSetup"));
+    QXmlStreamAttributes attributes = reader.attributes();
+    landscape = attributes.value(QLatin1String("orientation")) == QLatin1String("landscape");
+
+    for (auto attribute : attributes) {
+        if (attribute.name() == QLatin1String("orientation")) {
+            landscape = attribute.value() == QLatin1String("landscape");
+        } else if (attribute.name() == QLatin1String("scale")) {
+            scale = attribute.value().toInt();
+        } else if (attribute.name() == QLatin1String("fitToWidth")) {
+            fitToWidth = attribute.value().toInt();
+        } else if (attribute.name() == QLatin1String("fitToHeight")) {
+            fitToHeight = attribute.value().toInt();
+        }
+    }
+}
+
 QList<QSharedPointer<XlsxColumnInfo>> WorksheetPrivate::getColumnInfoList(int colFirst, int colLast)
 {
     QList<QSharedPointer<XlsxColumnInfo>> columnsInfoList;
@@ -2360,6 +2698,10 @@ bool Worksheet::loadFromXmlFile(QIODevice *device)
                 d->conditionalFormattingList.append(cf);
             } else if (reader.name() == QLatin1String("hyperlinks")) {
                 d->loadXmlHyperlinks(reader);
+            } else if (reader.name() == QLatin1String("pageMargins")) { // kYra added
+                d->loadXmlPageMargins(reader); // kYra added
+            } else if (reader.name() == QLatin1String("pageSetup")) { // kYra added
+                d->loadXmlPageSetup(reader); // kYra added
             } else if (reader.name() == QLatin1String("drawing")) {
                 QString rId = reader.attributes().value(QStringLiteral("r:id")).toString();
                 QString name = d->relationships->getRelationshipById(rId).target;
